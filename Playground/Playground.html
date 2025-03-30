@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Patentvoucher Playground</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; max-width: 800px; }
+        h1 { font-size: 24px; color: #333; }
+        .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; background: #f9f9f9; }
+        h2 { font-size: 18px; color: #005566; margin-bottom: 10px; }
+        h3 { font-size: 16px; color: #333; margin: 10px 0 5px; }
+        label { display: block; margin: 5px 0; font-size: 14px; }
+        input, select, textarea { width: 100%; max-width: 300px; padding: 5px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px; }
+        .inline-group { display: flex; gap: 10px; }
+        .inline-group input { max-width: 150px; }
+        button { padding: 10px 20px; background-color: #005566; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background-color: #003d4a; }
+        .required::after { content: " *"; color: red; }
+        #char-count { font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <h1>Patentvoucher Ansøgning - Playground</h1>
+    <form id="patentvoucher-form" onsubmit="return false;">
+
+    <!-- Trin 1: Stamdata -->
+    <div class="section">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 1 ud af 8</h2>
+        <p>Angiv stamdata på den virksomheden, ansøgningen vedrør.</p>
+        <h3>Stamdata</h3>
+        <div class="inline-group">
+            <label class="required">CVR-nr.: <input type="text" name="cvr" required /></label>
+            <label class="required">P-nr.: <input type="text" name="pnr" required /></label>
+        </div>  
+        <label class="required">Virksomhedsnavn: <input type="text" name="virksomhedsnavn" required /></label>
+        <label class="required">Adresse: <input type="text" name="adresse" required /></label>
+        <div class="inline-group">
+            <label class="required">Postnr.: <input type="text" name="postnr" required /></label>
+            <label class="required">By: <input type="text" name="by" required /></label>
+        </div>
+        <div class="inline-group">
+            <label class="required">Telefon: <input type="text" name="telefon" required /></label>
+            <label class="required">E-mail: <input type="email" name="email" required /></label>
+        </div>
+        <h3>Hvem har du været i kontakt med?</h3>
+        <label class="required">Vælg din IP-konsulent: 
+            <select name="ipkonsulent" required>
+                <option value="">Vælg...</option>
+                <option value="Allan Clausen">Allan Clausen</option>
+                <option value="Anette Høgh Sonnichsen">Anette Høgh Sonnichsen</option>
+                <option value="Bjarne Sørensen">Bjarne Sørensen</option>
+                <option value="Casper Gerner Mikkelsen">Casper Gerner Mikkelsen</option>
+                <option value="Christian Brix">Christian Brix</option>
+                <option value="Finn Bødtker">Finn Bødtker</option>
+                <option value="Gert Løkke Leth">Gert Løkke Leth</option>
+                <option value="Helle Bagger Nielsen">Helle Bagger Nielsen</option>
+                <option value="Jørgen Sølvkjær Vestergaard">Jørgen Sølvkjær Vestergaard</option>
+                <option value="Martin Th. Appel">Martin Th. Appel</option>
+                <option value="Max Damgaard">Max Damgaard</option>
+                <option value="Morten Drivsholm">Morten Drivsholm</option>
+                <option value="Morten Kusk Jensen">Morten Kusk Jensen</option>
+                <option value="Niels Bech Laursen">Niels Bech Laursen</option>
+                <option value="Randi Terp">Randi Terp</option>
+                <option value="Troels Larsen">Troels Larsen</option>
+            </select>
+        </label>
+        <button type="button" onclick="nextStep(1)">Gem og fortsæt</button>
+    </div>
+
+    <!-- Trin 2: Kontakter -->
+    <div class="section" style="display: none;">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 2 ud af 8</h2>
+        <p>Angiv virksomhedens primære kontaktpersoner.</p>
+        <h3>Projektansvarlig</h3>
+        <label class="required">Navn: <input type="text" name="projektansvarlig_navn" required /></label>
+        <label class="required">E-mail: <input type="email" name="projektansvarlig_email" required /></label>
+        <label class="required">Telefon: <input type="text" name="projektansvarlig_telefon" required /></label>
+        <h3>Administrativ kontaktperson</h3>
+        <label class="required">Navn: <input type="text" name="admin_navn" required /></label>
+        <label class="required">E-mail: <input type="email" name="admin_email" required /></label>
+        <label class="required">Telefon: <input type="text" name="admin_telefon" required /></label>
+        <h3>Tegningsberettiget</h3>
+        <label class="required">Navn: <input type="text" name="tegningsberettiget_navn" required /></label>
+        <label class="required">E-mail: <input type="email" name="tegningsberettiget_email" required /></label>
+        <label class="required">Telefon: <input type="text" name="tegningsberettiget_telefon" required /></label>
+        <button type="button" onclick="nextStep(2)">Gem og fortsæt</button>
+    </div>
+
+    <!-- Trin 3: Patentcertifikat -->
+    <div class="section" style="display: none;">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 3 ud af 8</h2>
+        <p>Nedenfor indtaster du oplysningerne, der står på dit IP-certifikat.</p>
+        <label class="required">Upload certifikat: <input type="file" name="certifikat_upload" required /></label>
+        <label class="required">Udstedelsesdato: <input type="date" name="udstedelsesdato" required /></label>
+        <label class="required">Udstedt af: <input type="text" name="udstedt_af" required /></label>
+        <label class="required">Overordnet titel på opfindelsen: <input type="text" name="opfindelse_titel" required /></label>
+        <label class="required">Patentklasse: <input type="text" name="patentklasse" required /></label>
+        <h3>Teknologiområde</h3>
+        <label class="required">Teknologiområde: 
+            <select name="teknologiomraade" required>
+                <option value="">Vælg...</option>
+                <option value="Teknologi 1">Teknologi 1</option>
+                <option value="Teknologi 2">Teknologi 2</option>
+            </select>
+        </label>
+        <h3>Nuværende patenter</h3>
+        <label class="required">Antal eksisterende patenter: <input type="number" name="eksisterende_patenter" required /></label>
+        <label class="required">Antal eksisterende patentansøgninger: <input type="number" name="eksisterende_ansogninger" required /></label>
+        <button type="button" onclick="nextStep(3)">Gem og fortsæt</button>
+    </div>
+
+    <!-- Trin 4: Virksomhedsbeskrivelse -->
+    <div class="section" style="display: none;">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 4 ud af 8</h2>
+        <p>Giv en kort virksomhedsbeskrivelse (ikke et vurderingskriterie).</p>
+        <label>Giv en kort virksomhedsbeskrivelse (max 700 tegn): 
+            <textarea name="virksomhedsbeskrivelse" rows="4" maxlength="700" oninput="updateCharCount(this)"></textarea>
+        </label>
+        <p>Tegn tilbage: <span id="char-count">700</span></p>
+        <button type="button" onclick="nextStep(4)">Gem og fortsæt</button>
+    </div>
+
+    <!-- Trin 5: De minimis -->
+    <div class="section" style="display: none;">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 5 ud af 8</h2>
+        <p>Har virksomheden modtaget statsstøtte under De minimis inden for de seneste tre år, skal det angives her.</p>
+        <label>Har virksomheden modtaget statsstøtte under De minimis? 
+            <input type="checkbox" name="de_minimis_stotte" /> Ja
+        </label>
+        <button type="button" onclick="nextStep(5)">Gem og fortsæt</button>
+    </div>
+
+    <!-- Trin 6: Nøgletal -->
+    <div class="section" style="display: none;">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 6 ud af 8</h2>
+        <p>Økonomioplysninger</p>
+        <label class="required">Omsætning 2023: <input type="number" name="omsaetning_2023" required /></label>
+        <label class="required">Omsætning 2024: <input type="number" name="omsaetning_2024" required /></label>
+        <label class="required">Omsætning Budget 2025: <input type="number" name="omsaetning_2025" required /></label>
+        <label class="required">Resultat 2023: <input type="number" name="resultat_2023" required /></label>
+        <label class="required">Resultat 2024: <input type="number" name="resultat_2024" required /></label>
+        <label class="required">Resultat Budget 2025: <input type="number" name="resultat_2025" required /></label>
+        <label class="required">Egenkapital 2023: <input type="number" name="egenkapital_2023" required /></label>
+        <label class="required">Egenkapital 2024: <input type="number" name="egenkapital_2024" required /></label>
+        <label class="required">Egenkapital Budget 2025: <input type="number" name="egenkapital_2025" required /></label>
+        <label class="required">Samlet årlig balance 2023: <input type="number" name="balance_2023" required /></label>
+        <label class="required">Samlet årlig balance 2024: <input type="number" name="balance_2024" required /></label>
+        <label class="required">Samlet årlig balance Budget 2025: <input type="number" name="balance_2025" required /></label>
+        <label class="required">Antal ansatte 2023: <input type="number" name="ansatte_2023" required /></label>
+        <label class="required">Antal ansatte 2024: <input type="number" name="ansatte_2024" required /></label>
+        <label class="required">Antal ansatte 2025: <input type="number" name="ansatte_2025" required /></label>
+        <button type="button" onclick="nextStep(6)">Gem og fortsæt</button>
+    </div>
+
+    <!-- Trin 7: Projektbeskrivelse -->
+    <div class="section" style="display: none;">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 7 ud af 8</h2>
+        <label class="required">Giv din ansøgning en præcis og sigende titel: <input type="text" name="projekt_titel" required /></label>
+        <label class="required">Beløb, der søges om: <input type="number" name="beloeb" max="100000" required /></label>
+        <label class="required">Giv en kort uddybende beskrivelse af, hvad I forventer at bruge tilskuddet til: 
+            <textarea name="projekt_beskrivelse" rows="4" required></textarea>
+        </label>
+        <h3>Primært område</h3>
+        <label class="required">Angiv hvilket område din opgave primært omhandler: 
+            <select name="projekt_omraade" multiple required>
+                <option value="Dansk patenteringsgebyr">Dansk patenteringsgebyr</option>
+                <option value="Dialogsøgning">Dialogsøgning</option>
+                <option value="Forundersøgelser">Forundersøgelser</option>
+                <option value="Patentrådgivning">Patentrådgivning</option>
+                <option value="Udarbejdelse af patentansøgning">Udarbejdelse af patentansøgning</option>
+                <option value="Andet område">Andet område</option>
+            </select>
+        </label>
+        <button type="button" onclick="nextStep(7)">Gem og fortsæt</button>
+    </div>
+
+    <!-- Trin 8: Indsend -->
+    <div class="section" style="display: none;">
+        <h2>Ansøgning: Patentvoucher, Pulje 1, trin 8 ud af 8</h2>
+        <p>Vi er klar til at modtage din ansøgning.</p>
+        <button type="button" onclick="submitForm()">Indsend</button>
+    </div>
+
+    </form>
+
+    <script>
+        let currentStep = 0;
+        const sections = document.querySelectorAll('.section');
+
+        function nextStep(step) {
+            sections[step].style.display = 'none';
+            sections[step + 1].style.display = 'block';
+            currentStep = step + 1;
+        }
+
+        function updateCharCount(textarea) {
+            const maxLength = textarea.getAttribute('maxlength');
+            const currentLength = textarea.value.length;
+            document.getElementById('char-count').textContent = maxLength - currentLength;
+        }
+
+        function submitForm() {
+            let formData = new FormData(document.getElementById('patentvoucher-form'));
+            console.log('Form data submitted:');
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+            const simulatedUrl = "https://ehnj.dk/patentvoucher/submit?" + new URLSearchParams(formData).toString();
+            console.log('Simulated request URL:', simulatedUrl);
+            alert('Ansøgning indsendt! Tjek konsollen for data og simuleret URL.');
+        }
+
+        sections[0].style.display = 'block';
+    </script>
+</body>
+</html>
